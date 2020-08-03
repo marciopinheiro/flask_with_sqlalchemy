@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+
+  flask_tutorial:
+    container_name: flask_tutorial
+    restart: always
+    volumes:
+      - ./:/var/www/app
+    build:
+      dockerfile: ./docker/python/Dockerfile
+      context: .
+    command: flask run --host=0.0.0.0 --port=5000
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_APP=app
+      - FLASK_ENV=development

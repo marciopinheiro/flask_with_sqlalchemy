@@ -16,3 +16,18 @@ services:
     environment:
       - FLASK_APP=app
       - FLASK_ENV=development
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER-postgres}
+      - POSTGRES_DB=${POSTGRES_DB-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD-postgres}
+    volumes:
+      - ./docker/postgres/config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/postgres/data:/var/lib/postgresql/data
+

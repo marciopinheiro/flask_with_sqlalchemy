@@ -1,10 +1,13 @@
 """
 Module that define auth models
 """
-from app import db
+from app.db import db
 
 
 class User(db.orm.Model):
+    """
+    Auth model class
+    """
     __tablename__ = "users"
 
     id = db.orm.Column(
@@ -16,7 +19,8 @@ class User(db.orm.Model):
     password = db.orm.Column(
         db.orm.String, nullable=False)
 
-    posts = db.orm.relationship("Post", back_populates="author", lazy=True)
+    posts = db.orm.relationship(
+        "Post", back_populates="author", lazy=True)
 
     def __repr__(self):
         return f'<User {self.username}>'

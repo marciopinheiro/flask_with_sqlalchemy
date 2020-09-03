@@ -1,9 +1,7 @@
 import os
 
 from flask import Flask
-from app.db import Database
-
-db = Database()
+from app.db import db
 
 
 def create_app(test_config=None):

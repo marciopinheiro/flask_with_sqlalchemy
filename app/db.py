@@ -1,7 +1,13 @@
+"""
+Module that defines app DB adapter class
+"""
 from flask_sqlalchemy import SQLAlchemy
 
 
 class Database:
+    """
+    Database adapter class
+    """
     orm = SQLAlchemy()
 
     def init_app(self, app):
@@ -16,5 +22,4 @@ class Database:
         self.orm.init_app(app)
 
 
-
-
+db = Database()

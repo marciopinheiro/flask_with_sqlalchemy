@@ -2,10 +2,13 @@
 Module that define blog models
 """
 from datetime import datetime
-from app import db
+from app.db import db
 
 
 class Post(db.orm.Model):
+    """
+    Post model class
+    """
     __tablename__ = "posts"
 
     id = db.orm.Column(
@@ -14,7 +17,8 @@ class Post(db.orm.Model):
     author_id = db.orm.Column(
         db.orm.Integer, db.orm.ForeignKey('users.id'), nullable=False)
 
-    author = db.orm.relationship("User", back_populates="posts")
+    author = db.orm.relationship(
+        "User", back_populates="posts")
 
     created = db.orm.Column(
         db.orm.DateTime, nullable=False, default=datetime.utcnow)

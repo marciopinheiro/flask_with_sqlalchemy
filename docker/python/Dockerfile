@@ -1,4 +1,4 @@
-FROM python:3.8.5
+FROM python:3.9.6
 
 # Installing necessary components
 RUN apt update

@@ -2,14 +2,20 @@
 Module that define auth views
 """
 from flask import flash, g, redirect, render_template, request, session, url_for
+from flask.views import MethodView
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
-from app.auth import auth
 from app.auth.models import User
 
+__all__ = (
+    'load_logged_in_user',
+    'Register', 
+    'Login', 
+    'Logout'
+)
 
-@auth.before_app_request
+
 def load_logged_in_user():
     user_id = session.get('user_id')
 
@@ -19,9 +25,16 @@ def load_logged_in_user():
         g.user = User.query.filter_by(id=user_id).first()
 
 
-@auth.route('/register', methods=('GET', 'POST'))
-def register():
-    if request.method == 'POST':
+class Register(MethodView):
+    """
+    Auth Register View class
+    """
+    template = 'auth/register.html'
+
+    def get(self):
+        return render_template(self.template)
+
+    def post(self):
         username = request.form['username']
         password = request.form['password']
         error = None
@@ -44,18 +57,25 @@ def register():
             return redirect(url_for('auth.login'))
 
         flash(error)
+        return render_template(self.template)
 
-    return render_template('auth/register.html')
 
+class Login(MethodView):
+    """
+    Auth Login View class
+    """
+    template = 'auth/login.html'
 
-@auth.route('/login', methods=('GET', 'POST'))
-def login():
-    if request.method == 'POST':
+    def get(self):
+        return render_template(self.template)
+
+    def post(self):
         username = request.form['username']
         password = request.form['password']
         error = None
-        user = User.query.filter_by(username=username).first_or_404()
 
+        user = User.query.filter_by(username=username).first_or_404()
+        
         if user is None:
             error = 'Incorrect username.'
         elif not check_password_hash(user.password, password):
@@ -67,11 +87,13 @@ def login():
             return redirect(url_for('index'))
 
         flash(error)
+        return render_template(self.template)
 
-    return render_template('auth/login.html')
 
-
-@auth.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('index'))
+class Logout(MethodView):
+    """
+    Auth Logout View class
+    """
+    def get(self):
+        session.clear()
+        return redirect(url_for('index'))

@@ -145,5 +145,8 @@ cython_debug/
 instance/app.db
 
 
+# Postgres Data
+docker/postgres/data/*
+
 # PyCharm
 .idea

@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-auth = Blueprint("auth", __name__)
+blueprint = Blueprint("auth", __name__)
 
-from . import views
+from . import urls
 from . import models

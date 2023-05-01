@@ -8,7 +8,7 @@
 -i https://pypi.org/simple
 click==8.0.1; python_version >= '3.6'
 flask-sqlalchemy==2.5.1
-flask==2.0.1
+flask==2.3.2
 greenlet==1.1.0; python_version >= '3'
 itsdangerous==2.0.1; python_version >= '3.6'
 jinja2==3.0.1; python_version >= '3.6'
